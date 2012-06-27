@@ -9,6 +9,23 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 final class Util
 {
     /**
+     * Get definitions by tag, sort, assiciate with keys and injects to specified service argument
+     *
+     * @param string           $serviceName
+     * @param string           $tag
+     * @param ContainerBuilder $container
+     * @param int              $arg
+     *
+     * @return \Symfony\Component\DependencyInjection\Definition
+     */
+    public static function addDefinitionsToService($tag, $serviceName, $arg, ContainerBuilder $container)
+    {
+        $definitions = self::getDefinitionsByTag($tag, $container);
+
+        return $container->getDefinition($serviceName)->replaceArgument($arg, $definitions);
+    }
+
+    /**
      * Get service definitions from container by tag
      * Sort by priority and associate with keys
      *
