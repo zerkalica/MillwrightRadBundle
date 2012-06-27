@@ -1,0 +1,10 @@
+# Symfony directories
+vendor/*
+
+.DS_Store
+.idea
+.project
+.buildpath
+.eclipse
+.settings
+.~lock*

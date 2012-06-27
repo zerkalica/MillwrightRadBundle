@@ -1,0 +1,2 @@
+parameters:
+    millwright_rad.status_mapper.class: Millwright\RadBundle\Twig\StatusMapper

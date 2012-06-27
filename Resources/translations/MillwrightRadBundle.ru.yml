@@ -1,0 +1,3 @@
+controller:
+    entity:
+        not_found: Сущность № %id% не найдена

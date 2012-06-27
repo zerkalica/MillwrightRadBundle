@@ -1,0 +1,16 @@
+{
+    "name": "zerkalica/millwright-rad-bundle",
+    "description": "Millwright rad bundle",
+    "authors": [
+        {
+            "name": "Stefan Zerkalica",
+            "email": "zerkalica@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Millwright\\RadBundle": ""
+        }
+    },
+    "target-dir": "Millwright/RadBundle"
+}
