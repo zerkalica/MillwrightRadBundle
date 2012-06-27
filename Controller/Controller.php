@@ -10,6 +10,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 abstract class Controller extends BaseController
 {
+    const FLASH_ERROR   = 'error';
+    const FLASH_WARNING = 'warning';
+    const FLASH_INFO    = 'info';
+    const FLASH_SUCCESS = 'success';
+
     /**
      * @return \Symfony\Component\HttpFoundation\Session\Session
      */
@@ -64,13 +69,16 @@ abstract class Controller extends BaseController
     /**
      * Set flash message to session
      *
-     * @param string $name
-     * @param string $value
+     * @param string|array $value array('message': string, 'params': array, 'domain': string)
+     * @param string $name flash message type: error, warning, info, success @see self::FLASH_* constants
      *
      * @return void
      */
-    public function flash($name, $value)
+    public function flash($value, $name = self::FLASH_SUCCESS)
     {
+        if (is_array($value)) {
+            $value = $this->trans($value['message'], $value['params'], $value['domain']);
+        }
         $this->getSession()->getFlashBag()->set($name, $value);
     }
 
@@ -95,7 +103,7 @@ abstract class Controller extends BaseController
         $status = 302)
     {
         if ($message) {
-            $this->flash($route, $this->trans($message, $messageParams, $domain));
+            $this->flash(array('message' => $message, 'params' => $parameters, 'domain' => $domain));
         }
 
         return $this->redirectRoute($route, $parameters, $status);
