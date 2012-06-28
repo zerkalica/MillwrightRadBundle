@@ -2,9 +2,6 @@
 
 namespace Millwright\RadBundle\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
-
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -12,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class EntityToIdTransformer implements DataTransformerInterface
+class EntityToIdTransformer implements EntityToIdTransformerInterface
 {
     /**
      * @var ObjectManager
@@ -22,15 +19,13 @@ class EntityToIdTransformer implements DataTransformerInterface
     /**
      * @var string
      */
-    protected $class;
+    protected $class = null;
 
     /**
-     * @param string        $class
      * @param ObjectManager $objectManager
      */
-    public function __construct($class, ObjectManager $objectManager)
+    public function __construct(ObjectManager $objectManager)
     {
-        $this->class         = $class;
         $this->objectManager = $objectManager;
     }
 
@@ -55,6 +50,26 @@ class EntityToIdTransformer implements DataTransformerInterface
             return null;
         }
 
+        if (!$this->class) {
+            throw new \Exception('Property $class must be initialize.');
+        }
+
         return $this->objectManager->find($this->class, $id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }

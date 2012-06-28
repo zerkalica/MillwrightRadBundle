@@ -103,7 +103,7 @@ abstract class Controller extends BaseController
         $status = 302)
     {
         if ($message) {
-            $this->flash(array('message' => $message, 'params' => $parameters, 'domain' => $domain));
+            $this->flash(array('message' => $message, 'params' => $messageParams, 'domain' => $domain));
         }
 
         return $this->redirectRoute($route, $parameters, $status);
