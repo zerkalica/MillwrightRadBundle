@@ -1,8 +1,2 @@
 parameters:
     millwright_rad.status_mapper.class: Millwright\RadBundle\Twig\StatusMapper
-
-services:
-    millwright_rad.entity_to_id_transformer:
-        class: FOS\UserBundle\Form\DataTransformer\UserToUsernameTransformer
-        argiments:
-            - @doctrine.orm.entity_manager
