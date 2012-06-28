@@ -36,7 +36,7 @@ abstract class ObjectIdentityRetrievalStrategy implements ObjectIdentityRetrieva
 
     protected function getAliasByClassName($className)
     {
-        if (!$this->namespaces) {
+        if ($this->namespaces === null) {
             $namespaces = $this->getNamespaces();
             $this->namespaces = array_flip($namespaces);
         }
