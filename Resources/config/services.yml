@@ -13,3 +13,4 @@ services:
         class: %security.acl.object_identity_retrieval_strategy.class%
         arguments:
             - @doctrine.orm.entity_manager
+            - @validator.mapping.class_metadata_factory
