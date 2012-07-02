@@ -3,6 +3,7 @@ namespace Millwright\RadBundle\Form;
 
 use Symfony\Component\Form\AbstractType as BaseAbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Util\ClassUtils;
 
 /**
  * {@inheritDoc}
@@ -38,7 +39,7 @@ abstract class AbstractType extends BaseAbstractType
      */
     protected function getDefaultName()
     {
-        $parts = explode('\\', get_class($this));
+        $parts = explode('\\', ClassUtils::getRealClass($this));
         $parts = array_splice($parts, 2);
         $name  = implode('_', $parts);
         $name  = str_replace(array('Bundle', '_Form', '_Type', 'FormType'), array(''), $name);
@@ -48,7 +49,7 @@ abstract class AbstractType extends BaseAbstractType
 
     protected function getDefaultTranslationDomain()
     {
-        $parts = explode('\\', get_class($this));
+        $parts = explode('\\', ClassUtils::getRealClass($this));
 
         return $parts[0] . $parts[1];
     }
