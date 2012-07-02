@@ -5,6 +5,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use Symfony\Component\Security\Core\Util\ClassUtils;
+
 /**
  * Generic controller
  */
@@ -42,7 +44,7 @@ abstract class Controller extends BaseController
     protected function getTranslationDomain()
     {
         //autodetect domain
-        $parts = explode('\\', get_class($this));
+        $parts = explode('\\', ClassUtils::getRealClass($this));
 
         return $parts[0] . $parts[1];
     }
