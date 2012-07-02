@@ -14,3 +14,15 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @validator.mapping.class_metadata_factory
+
+    millwright_rad.form.group_to_id_transformer:
+        class: Millwright\RadBundle\Form\DataTransformer\EntityToIdTransformer
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    millwright_rad.form.group_select_type:
+        class: Millwright\RadBundle\Form\Type\EntitySelectFormType
+        arguments:
+            - @millwright_rad.form.group_to_id_transformer
+        tags:
+            - { name: form.type, alias: entity_selector }
