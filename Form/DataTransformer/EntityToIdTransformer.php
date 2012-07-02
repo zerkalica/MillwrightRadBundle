@@ -64,12 +64,4 @@ class EntityToIdTransformer implements EntityToIdTransformerInterface
     {
         $this->class = $class;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
 }

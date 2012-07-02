@@ -10,9 +10,4 @@ interface EntityToIdTransformerInterface extends DataTransformerInterface
      * @param string $class
      */
     function setClass($class);
-
-    /**
-     * @return string
-     */
-    function getClass();
 }
