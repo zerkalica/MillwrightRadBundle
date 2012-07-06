@@ -52,7 +52,14 @@ final class Util
         foreach ($containers as $key => $definition) {
             $attributes         = $definition->getTag($tag);
             $type               = isset($attributes[0]['type']) ? $attributes[0]['type'] : $key;
-            $definitions[$type] = $definition;
+            if (isset($definitions[$type])) {
+                if (!is_array($definitions[$type])) {
+                    $definitions[$type] = array($definitions[$type]);
+                }
+                $definitions[$type][] = $definition;
+            } else {
+                $definitions[$type] = $definition;
+            }
         }
 
         return $definitions;
