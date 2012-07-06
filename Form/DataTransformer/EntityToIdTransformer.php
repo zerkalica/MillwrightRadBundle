@@ -1,5 +1,4 @@
 <?php
-
 namespace Millwright\RadBundle\Form\DataTransformer;
 
 use Doctrine\Common\Persistence\ObjectManager;

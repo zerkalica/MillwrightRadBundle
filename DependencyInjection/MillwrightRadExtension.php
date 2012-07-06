@@ -14,4 +14,17 @@ use Symfony\Component\DependencyInjection\Loader;
 class MillwrightRadExtension extends Extension
 {
     protected $configRoot = __DIR__;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getConfigParts()
+    {
+        return array(
+            'acl.yml',
+            'form.yml',
+            'twig.yml',
+        );
+    }
+
 }
