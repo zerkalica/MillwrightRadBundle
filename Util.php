@@ -21,9 +21,9 @@ final class Util
      */
     public static function addDefinitionsToService($tag, $serviceName, $arg, ContainerBuilder $container, $aggregate = false)
     {
-        $definitions = self::getDefinitionsByTag($tag, $container);
+        $definitions = self::getDefinitionsByTag($tag, $container, $aggregate);
 
-        return $container->getDefinition($serviceName)->replaceArgument($arg, $definitions, $aggregate);
+        return $container->getDefinition($serviceName)->replaceArgument($arg, $definitions);
     }
 
     /**
