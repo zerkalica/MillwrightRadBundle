@@ -60,6 +60,7 @@ class EntitySelectFormType extends AbstractType
 
         $resolver->setDefaults(array(
             'show_child_legend' => false,
+            'translation_domain'  => null,
         ));
     }
 }
