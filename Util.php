@@ -2,6 +2,7 @@
 namespace Millwright\RadBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * Rad static utils class
@@ -34,7 +35,7 @@ final class Util
      * @param ContainerBuilder $container
      * @param boolean          $aggregate if true - result is array of definitions arrays, aggregated by type key
      *
-     * @return array
+     * @return Definition[]
      */
     public static function getDefinitionsByTag($tag, ContainerBuilder $container, $aggregate = false)
     {
