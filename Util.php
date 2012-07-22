@@ -10,6 +10,26 @@ use Symfony\Component\DependencyInjection\Definition;
 final class Util
 {
     /**
+     * Set or modify date time object
+     *
+     * @param \DateTime|null & $to
+     * @param \DateTime $from
+     *
+     * @return \DateTime
+     */
+    public static function setDateTime(\DateTime & $to = null, \DateTime $from)
+    {
+        if (null === $to) {
+            $to = $from;
+        } else {
+            $to->setTimestamp($from->getTimestamp());
+            $to->setTimezone($from->getTimezone());
+        }
+
+        return $to;
+    }
+
+    /**
      * Get definitions by tag, sort, assiciate with keys and injects to specified service argument
      *
      * @param string           $serviceName
