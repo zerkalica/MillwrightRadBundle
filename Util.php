@@ -4,6 +4,8 @@ namespace Millwright\RadBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
+use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * Rad static utils class
  */
@@ -13,7 +15,7 @@ final class Util
      * Set or modify date time object
      *
      * @param \DateTime|null & $to
-     * @param \DateTime $from
+     * @param \DateTime      $from
      *
      * @return \DateTime
      */
@@ -40,7 +42,9 @@ final class Util
      *
      * @return \Symfony\Component\DependencyInjection\Definition
      */
-    public static function addDefinitionsToService($tag, $serviceName, $arg, ContainerBuilder $container, $aggregate = false)
+    public static function addDefinitionsToService(
+        $tag, $serviceName, $arg, ContainerBuilder $container, $aggregate = false
+    )
     {
         $definitions = self::getDefinitionsByTag($tag, $container, $aggregate);
 
@@ -73,8 +77,8 @@ final class Util
 
         $definitions = array();
         foreach ($containers as $key => $definition) {
-            $attributes         = $definition->getTag($tag);
-            $type               = isset($attributes[0]['type']) ? $attributes[0]['type'] : $key;
+            $attributes = $definition->getTag($tag);
+            $type       = isset($attributes[0]['type']) ? $attributes[0]['type'] : $key;
             if ($aggregate) {
                 if (!isset($definitions[$type])) {
                     $definitions[$type] = array();
@@ -110,6 +114,7 @@ final class Util
      *
      * @param  array $to
      * @param  array $from
+     *
      * @return array
      */
     public static function merge($to, $from)
