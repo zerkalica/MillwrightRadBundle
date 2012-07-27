@@ -14,7 +14,7 @@ services:
         arguments:
             - @millwright_rad.form.group_to_id_transformer
         tags:
-            - { name: form.type, alias: entity_selector }
+            - { name: form.type, alias: 'entity_selector' }
 
     millwright_rad.form.days_to_seconds_transformer:
         class: Millwright\RadBundle\Form\DataTransformer\SecondsToDaysTransformer

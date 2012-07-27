@@ -63,4 +63,12 @@ class EntitySelectFormType extends AbstractType
             'translation_domain'  => null,
         ));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'entity_selector';
+    }
 }
