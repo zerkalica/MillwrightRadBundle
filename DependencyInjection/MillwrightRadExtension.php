@@ -1,10 +1,7 @@
 <?php
 namespace Millwright\RadBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Millwright\RadBundle\Extension;
-use Symfony\Component\DependencyInjection\Loader;
+use Millwright\ConfigurationBundle\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -26,5 +23,4 @@ class MillwrightRadExtension extends Extension
             'twig.yml',
         );
     }
-
 }

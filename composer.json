@@ -7,10 +7,14 @@
             "email": "zerkalica@gmail.com"
         }
     ],
+    "require": {
+        "zerkalica/millwright-configuration-bundle": "dev-master"
+    },
     "autoload": {
         "psr-0": {
             "Millwright\\RadBundle": ""
         }
     },
-    "target-dir": "Millwright/RadBundle"
+    "target-dir": "Millwright/RadBundle",
+    "minimum-stability": "dev"
 }

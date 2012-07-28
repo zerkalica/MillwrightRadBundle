@@ -3,7 +3,7 @@ namespace Millwright\RadBundle\Twig;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-use Millwright\RadBundle\Form\Util\FormUtil;
+use Millwright\ConfigurationBundle\PhpUtil as Util;
 
 /**
  * Status mapper interface
@@ -39,7 +39,7 @@ class StatusMapper implements StatusMapperInterface
      */
     public function all(array $items = array())
     {
-        $map = FormUtil::convertConstantsToOptions($this->class, $this->prefix, '.', $this->constPrefix);
+        $map = Util::convertConstantsToOptions($this->class, $this->prefix, '.', $this->constPrefix);
         foreach ($map as & $item) {
             $item = $this->translator->trans($item, array(), $this->domain);
         }
