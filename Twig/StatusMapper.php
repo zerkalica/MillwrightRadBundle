@@ -39,7 +39,7 @@ class StatusMapper implements StatusMapperInterface
      */
     public function all(array $items = array())
     {
-        $map = Util::convertConstantsToOptions($this->class, $this->prefix, '.', $this->constPrefix);
+        $map = Util::convertConstantsToOptions($this->class, $this->prefix, $this->constPrefix, '.');
         foreach ($map as & $item) {
             $item = $this->translator->trans($item, array(), $this->domain);
         }
