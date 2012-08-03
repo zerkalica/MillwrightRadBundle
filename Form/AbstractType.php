@@ -79,7 +79,7 @@ abstract class AbstractType extends BaseAbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => $this->class,
-            'label'              => $this->getDefaultLabel(),
+            'label'              => null,
             'intention'          => $this->getIntention(),
             'translation_domain' => $this->getDefaultTranslationDomain(),
         ));
