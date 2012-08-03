@@ -21,6 +21,7 @@ class MillwrightRadExtension extends Extension
             'acl.yml',
             'form.yml',
             'twig.yml',
+            'validators.yml',
         );
     }
 }

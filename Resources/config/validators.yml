@@ -1,0 +1,8 @@
+parameters:
+    millwright_rad.validator.date_not_less_than_current.class: Boombate\ContractOwnershipBundle\Validator\DateNotLessThanCurrentValidator
+
+services:
+    millwright_rad.validator.date_not_less_than_current:
+        class: %millwright_rad.validator.date_not_less_than_current.class%
+        tags:
+            - { name: 'validator.constraint_validator', alias: 'millwright_rad.validator.date_not_less_than_current' }
