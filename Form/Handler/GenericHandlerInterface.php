@@ -4,15 +4,17 @@ namespace Millwright\RadBundle\Form\Handler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 
+use Millwright\ComponentFormBundle\Form\Handler\ProcessResult;
+
 /**
  * Generic form handler interface
  */
 interface GenericHandlerInterface
 {
     /**
-     * Get form view to pass to template
+     * Process form
      *
-     * @return FormView
+     * @return ProcessResult
      */
-    function getView(FormView $parent = null);
+    function process();
 }

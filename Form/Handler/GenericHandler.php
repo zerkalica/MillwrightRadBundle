@@ -45,12 +45,4 @@ abstract class GenericHandler implements GenericHandlerInterface
 
         return false;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getView(FormView $parent = null)
-    {
-        return $this->form->createView($parent);
-    }
 }
