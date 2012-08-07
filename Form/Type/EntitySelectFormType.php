@@ -2,7 +2,7 @@
 namespace Millwright\RadBundle\Form\Type;
 
 use Millwright\RadBundle\Form\AbstractType;
-use Millwright\RadBundle\Form\DataTransformer\EntityToIdTransformer;
+use Millwright\RadBundle\Form\DataTransformer\ModelToDataTransformer;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,7 +17,7 @@ class EntitySelectFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new EntityToIdTransformer($options['collection'], $options['labelPath'], $options['valuePath']);
+        $transformer = new ModelToDataTransformer($options['collection'], $options['labelPath'], $options['valuePath']);
 
         $builder->resetViewTransformers();
         $builder->addViewTransformer($transformer);

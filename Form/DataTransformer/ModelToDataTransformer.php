@@ -8,7 +8,7 @@ use Symfony\Component\Form\Util\PropertyPath;
 /**
  * Transforms between a Model/s instance and a string/array.
  */
-class EntityToIdTransformer implements DataTransformerInterface
+class ModelToDataTransformer implements DataTransformerInterface
 {
     protected $collection;
     protected $labelPath;
