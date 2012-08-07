@@ -2,6 +2,7 @@
 namespace Millwright\RadBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormView;
 
 /**
  * Generic form handler interface
@@ -9,9 +10,9 @@ use Symfony\Component\Form\Form;
 interface GenericHandlerInterface
 {
     /**
-     * Get associated with form handler form
+     * Get form view to pass to template
      *
-     * @return Form
+     * @return FormView
      */
-    function getForm();
+    function getView(FormView $parent = null);
 }

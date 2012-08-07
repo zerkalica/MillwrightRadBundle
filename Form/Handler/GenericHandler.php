@@ -3,6 +3,7 @@ namespace Millwright\RadBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormView;
 
 /**
  * Generic form hanlder
@@ -48,8 +49,8 @@ abstract class GenericHandler implements GenericHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function getForm()
+    public function getView(FormView $parent = null)
     {
-        return $this->form;
+        return $this->form->createView($parent);
     }
 }
