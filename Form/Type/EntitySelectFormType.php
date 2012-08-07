@@ -2,7 +2,7 @@
 namespace Millwright\RadBundle\Form\Type;
 
 use Millwright\RadBundle\Form\AbstractType;
-use Millwright\RadBundle\Form\DataTransformer\EntityToIdTransformerInterface;
+use Millwright\RadBundle\Form\DataTransformer\EntityToIdTransformer;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -13,34 +13,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class EntitySelectFormType extends AbstractType
 {
     /**
-     * @var EntityToIdTransformerInterface
-     */
-    protected $transformer;
-
-    /**
-     * Construct
-     *
-     * @param $transformer
-     */
-    public function __construct(EntityToIdTransformerInterface $transformer)
-    {
-        parent::__construct();
-
-        $this->transformer = $transformer;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (!isset($options['transform_class'])) {
-            throw new \Symfony\Component\Serializer\Exception\InvalidArgumentException('Transform class option must be declared');
-        }
+        $transformer = new EntityToIdTransformer($options['collection'], $options['labelPath'], $options['valuePath']);
 
-        $this->transformer->setClass($options['transform_class']);
-
-        $builder->addModelTransformer($this->transformer);
+        $builder->resetViewTransformers();
+        $builder->addViewTransformer($transformer);
     }
 
     /**
@@ -59,8 +39,11 @@ class EntitySelectFormType extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults(array(
-            'show_child_legend' => false,
-            'translation_domain'  => null,
+            'show_child_legend'  => false,
+            'translation_domain' => null,
+            'collection'         => array(),
+            'labelPath'          => 'name',
+            'valuePath'          => 'id'
         ));
     }
 

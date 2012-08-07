@@ -1,66 +1,57 @@
 <?php
 namespace Millwright\RadBundle\Form\DataTransformer;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Form\DataTransformerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\Util\PropertyPath;
 
 /**
- * Transforms between a UserInterface instance and a username string.
- *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ * Transforms between a Model/s instance and a string/array.
  */
-class EntityToIdTransformer implements EntityToIdTransformerInterface
+class EntityToIdTransformer implements DataTransformerInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
+    protected $collection;
+    protected $labelPath;
+    protected $valuePath;
 
-    /**
-     * @var string
-     */
-    protected $class = null;
-
-    /**
-     * @param ObjectManager $objectManager
-     */
-    public function __construct(ObjectManager $objectManager)
+    public function __construct($collection, $labelPath, $valuePath)
     {
-        $this->objectManager = $objectManager;
+        $this->collection = $collection;
+        $this->labelPath  = null !== $labelPath ? new PropertyPath($labelPath) : null;
+        $this->valuePath  = null !== $valuePath ? new PropertyPath($valuePath) : null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function transform($entity)
+    public function transform($data)
     {
-        if (null === $entity) {
-            return null;
+        $options = array();
+
+        foreach ($this->collection as $model) {
+            $id           = $this->valuePath->getValue($model);
+            $label        = $this->labelPath->getValue($model);
+            $options[$id] = $label;
         }
 
-        return $entity->getId();
+        return $options;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function reverseTransform($id)
+    public function reverseTransform($data)
     {
-        if (null === $id || '' === $id) {
-            return null;
+        $collection = new ArrayCollection();
+
+        foreach ($data as $value) {
+            foreach ($this->collection as $model) {
+                if ($this->valuePath->getValue($model) === $value) {
+                    $collection->add($model);
+                }
+            }
         }
 
-        if (!$this->class) {
-            throw new \Exception('Property $class must be initialize.');
-        }
-
-        return $this->objectManager->find($this->class, $id);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
+        return $collection;
     }
 }
