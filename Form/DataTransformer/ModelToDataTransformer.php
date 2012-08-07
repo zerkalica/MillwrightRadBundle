@@ -28,10 +28,9 @@ class ModelToDataTransformer implements DataTransformerInterface
     {
         $options = array();
 
-        foreach ($this->collection as $model) {
-            $id           = $this->valuePath->getValue($model);
-            $label        = $this->labelPath->getValue($model);
-            $options[$id] = $label;
+        foreach ($data as $model) {
+            $id        = $this->valuePath->getValue($model);
+            $options[] = (string) $id;
         }
 
         return $options;
@@ -46,7 +45,7 @@ class ModelToDataTransformer implements DataTransformerInterface
 
         foreach ($data as $value) {
             foreach ($this->collection as $model) {
-                if ($this->valuePath->getValue($model) === $value) {
+                if ($this->valuePath->getValue($model) == (int) $value) {
                     $collection->add($model);
                 }
             }
