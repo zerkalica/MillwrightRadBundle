@@ -62,56 +62,12 @@ class EntitySelectFormType extends AbstractType
             return $choiceListCache[$hash];
         };
 
-        $emptyData = function (Options $options) {
-            if ($options['multiple'] || $options['expanded']) {
-                return array();
-            }
-
-            return '';
-        };
-
-        $emptyValue = function (Options $options) {
-            return $options['required'] ? null : '';
-        };
-
-        $emptyValueNormalizer = function (Options $options, $emptyValue) {
-            if ($options['multiple'] || $options['expanded']) {
-                // never use an empty value for these cases
-                return null;
-            } elseif (false === $emptyValue) {
-                // an empty value should be added but the user decided otherwise
-                return null;
-            }
-
-            // empty value has been set explicitly
-            return $emptyValue;
-        };
-
-        $compound = function (Options $options) {
-            return $options['expanded'];
-        };
-
         $resolver->setDefaults(array(
-                'multiple'          => false,
-                'expanded'          => false,
                 'choice_list'       => $choiceList,
                 'choices'           => array(),
                 'preferred_choices' => array(),
-                'empty_data'        => $emptyData,
-                'empty_value'       => $emptyValue,
-                'error_bubbling'    => false,
-                'compound'          => $compound,
-
                 'labelPath'          => 'name',
                 'valuePath'          => 'id',
-            ));
-
-        $resolver->setNormalizers(array(
-                'empty_value' => $emptyValueNormalizer,
-            ));
-
-        $resolver->setAllowedTypes(array(
-                'choice_list' => array('null', 'Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface'),
             ));
     }
 
