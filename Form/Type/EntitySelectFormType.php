@@ -63,11 +63,12 @@ class EntitySelectFormType extends AbstractType
         };
 
         $resolver->setDefaults(array(
-            'choice_list'       => $choiceList,
-            'choices'           => array(),
-            'preferred_choices' => array(),
+            'choice_list'        => $choiceList,
+            'choices'            => array(),
+            'preferred_choices'  => array(),
             'label_path'         => 'name',
             'value_path'         => 'id',
+            'group_path'         => null,
         ));
     }
 
