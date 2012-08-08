@@ -85,6 +85,6 @@ class EntitySelectFormType extends AbstractType
      */
     public function getName()
     {
-        return 'entity_selector';
+        return 'entity_choice';
     }
 }
