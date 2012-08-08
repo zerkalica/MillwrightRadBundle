@@ -56,7 +56,7 @@ class EntitySelectFormType extends AbstractType
             $hash = md5(json_encode(array($choicesKeys, $options['preferred_choices'])));
 
             if (!isset($choiceListCache[$hash])) {
-                $choiceListCache[$hash] = new ObjectChoiceList($choices, $options['labelPath'], $options['preferred_choices'], null, $options['valuePath']);
+                $choiceListCache[$hash] = new ObjectChoiceList($choices, $options['label_path'], $options['preferred_choices'], $options['group_path'], $options['value_path']);
             }
 
             return $choiceListCache[$hash];
@@ -66,8 +66,8 @@ class EntitySelectFormType extends AbstractType
             'choice_list'       => $choiceList,
             'choices'           => array(),
             'preferred_choices' => array(),
-            'labelPath'         => 'name',
-            'valuePath'         => 'id',
+            'label_path'         => 'name',
+            'value_path'         => 'id',
         ));
     }
 
