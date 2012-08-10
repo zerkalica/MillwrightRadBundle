@@ -23,7 +23,7 @@ class ChoicesToValuesTransformer implements DataTransformerInterface
      */
     public function transform($array)
     {
-        return iterator_to_array($array);
+        return $array instanceof \Traversable ? iterator_to_array($array) : array();
     }
 
     /**
