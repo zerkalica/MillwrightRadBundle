@@ -1,19 +1,20 @@
 <?php
 namespace Millwright\RadBundle\Form\Type;
 
-use Millwright\RadBundle\Form\DataTransformer\ModelToDataTransformer;
-
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
+
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\Options;
 
+use Millwright\RadBundle\Form\DataTransformer\ModelToDataTransformer;
+use Millwright\RadBundle\Form\DataTransformer\ChoicesToValuesTransformer;
+use Millwright\RadBundle\Form\Extension\TreeObjectChoiceList;
 use Millwright\RadBundle\Form\AbstractType;
 
-use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
+use Millwright\RadBundle\Model\TreeInterface;
 
-use Millwright\RadBundle\Form\DataTransformer\ChoicesToValuesTransformer;
-
-use Symfony\Component\Form\Util\PropertyPath;
 /**
  * GroupSelect form type
  */
@@ -56,7 +57,25 @@ class EntitySelectFormType extends AbstractType
             $hash = md5(json_encode(array($choicesKeys, $options['preferred_choices'])));
 
             if (!isset($choiceListCache[$hash])) {
-                $choiceListCache[$hash] = new ObjectChoiceList($choices, $options['label_path'], $options['preferred_choices'], $options['group_path'], $options['value_path']);
+                if ($options['is_tree']) {
+                    $choiceListCache[$hash] = new TreeObjectChoiceList(
+                        $choices,
+                        $options['label_path'],
+                        $options['preferred_choices'],
+                        $options['excluded_choices'],
+                        $options['group_path'],
+                        $options['value_path'],
+                        $options['prefix_sign']
+                    );
+                } else {
+                    $choiceListCache[$hash] = new ObjectChoiceList(
+                        $choices,
+                        $options['label_path'],
+                        $options['preferred_choices'],
+                        $options['group_path'],
+                        $options['value_path']
+                    );
+                }
             }
 
             return $choiceListCache[$hash];
@@ -66,9 +85,12 @@ class EntitySelectFormType extends AbstractType
             'choice_list'       => $choiceList,
             'choices'           => array(),
             'preferred_choices' => array(),
+            'excluded_choices'  => array(),
             'label_path'        => 'name',
             'value_path'        => 'id',
             'group_path'        => null,
+            'prefix_sign'       => '-',
+            'is_tree'           => false
         ));
     }
 
