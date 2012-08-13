@@ -17,13 +17,15 @@ class ChoicesToValuesTransformer implements DataTransformerInterface
      *
      * @param ArrayCollection $array array collection of model objects
      *
-     * @return array of model objects
+     * @return array Array of model objects
      *
      * @throws UnexpectedTypeException if the given value is not an array
      */
-    public function transform($array)
+    public function transform($value)
     {
-        return $array instanceof \Traversable ? iterator_to_array($array) : array();
+        $value = $value instanceof \Traversable ? iterator_to_array($value) : $value;
+
+        return $value;
     }
 
     /**
