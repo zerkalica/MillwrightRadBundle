@@ -20,7 +20,7 @@ class SwitchEnvCommand extends ContainerAwareCommand
         $this
             ->setName('millwright:rad:setenv')
             ->setDescription('Set current environment')
-            ->setDefinition(array(new InputOption('environment', null, InputOption::VALUE_REQUIRED, 'Environment id: prod, test, dev'),));
+            ->setDefinition(array(new InputOption('env', null, InputOption::VALUE_REQUIRED, 'Environment id: prod, test, dev'),));
     }
 
     /**
@@ -28,8 +28,8 @@ class SwitchEnvCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filename = $this->getContainer()->getParameter('kernel.root_dir') . '/environment.txt';
-        $env = $input->getOption('environment');
+        $filename = \Application::getInstance()->getEnvFileName();
+        $env = $input->getOption('env');
 
         file_put_contents($filename, $env);
 
@@ -43,20 +43,20 @@ class SwitchEnvCommand extends ContainerAwareCommand
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        if (!$input->getOption('environment')) {
+        if (!$input->getOption('env')) {
             $env = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose an environment:',
                 function($env) {
-                    if (empty($env) || !in_array($env, array('prod', 'dev', 'test'))) {
-                        throw new \Exception('Environment mast be: prod, dev, test');
+                    if (empty($env) || !in_array($env, \Application::getInstance()->getAvailableEnvs())) {
+                        throw new \Exception('Environment must be on of the ' . implode(', ', \Application::getInstance()->getAvailableEnvs()));
                     }
 
                     return $env;
                 }
             );
 
-            $input->setOption('environment', $env);
+            $input->setOption('env', $env);
         }
     }
 }

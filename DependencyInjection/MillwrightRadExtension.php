@@ -18,6 +18,7 @@ class MillwrightRadExtension extends Extension
     protected function getConfigParts()
     {
         return array(
+            'app.yml',
             'acl.yml',
             'form.yml',
             'twig.yml',

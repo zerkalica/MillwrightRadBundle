@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+use Symfony\Bundle\FrameworkBundle\Console\Application as ConsoleApp;
+
+require_once __DIR__ . '/Application.php';
+$kernel = Application::getInstance()->createKernel();
+$application = new ConsoleApp($kernel);
+$application->run();
