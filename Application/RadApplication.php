@@ -92,7 +92,8 @@ class RadApplication
     {
         $envs = self::getAvailableEnvs();
         if (!$environment || !in_array($environment, $envs)) {
-            $message = 'Set an environment: app/console millwright:rad:setenv --env [' . implode(', ', $envs) . ']';
+            $options = '[' . implode(', ', $envs) . ']';
+            $message = 'Set an environment: app/console millwright:rad:setenv --env=' . $options . ' --name=' . $options;
             echo $message . PHP_EOL;
             exit(1);
         }

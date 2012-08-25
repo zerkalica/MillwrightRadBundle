@@ -63,6 +63,10 @@ class VersionManager
     {
         $parts = $this->explodeVersion($version);
         $this->incrementPart($parts, $part);
+        $max = count($parts);
+        for ($i = $part + 1; $i < $max; $i++) {
+            $parts[$i] = 0;
+        }
 
         return $this->partsToString($parts);
     }

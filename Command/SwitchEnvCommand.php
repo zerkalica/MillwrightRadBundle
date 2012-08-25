@@ -20,7 +20,7 @@ class SwitchEnvCommand extends ContainerAwareCommand
         $this
             ->setName('millwright:rad:setenv')
             ->setDescription('Set current environment')
-            ->setDefinition(array(new InputOption('env', null, InputOption::VALUE_REQUIRED, 'Environment id: prod, test, dev'),));
+            ->setDefinition(array(new InputOption('name', null, InputOption::VALUE_REQUIRED, 'Environment id: prod, test, dev'),));
     }
 
     /**
@@ -29,7 +29,7 @@ class SwitchEnvCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filename = \Application::getInstance()->getEnvFileName();
-        $env = $input->getOption('env');
+        $env = $input->getOption('name');
 
         file_put_contents($filename, $env);
 
@@ -43,7 +43,7 @@ class SwitchEnvCommand extends ContainerAwareCommand
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        if (!$input->getOption('env')) {
+        if (!$input->getOption('name')) {
             $env = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose an environment:',
@@ -56,7 +56,7 @@ class SwitchEnvCommand extends ContainerAwareCommand
                 }
             );
 
-            $input->setOption('env', $env);
+            $input->setOption('name', $env);
         }
     }
 }

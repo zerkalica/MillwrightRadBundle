@@ -76,6 +76,10 @@ class VersionFileReplacer
 
     protected function replaceInFile($fileName, $regex, $replaceTo)
     {
+        if (!is_dir(dirname($fileName))) {
+            mkdir(dirname($fileName), 0777, true);
+        }
+
         $data    = file_get_contents($fileName);
         $newData = preg_replace($regex, $replaceTo, $data);
         if ($data != $newData) {
