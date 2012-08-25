@@ -1,7 +1,7 @@
 <?php
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
-define('SNAPDIR', dirname(dirname(__DIR__)) . '/boombate-snap');
+define('SNAPDIR', dirname(dirname(__DIR__)) . '/suymfony-snap');
 define('SRCDIR', dirname(__DIR__) . '/src');
 
 call_user_func(function() {
