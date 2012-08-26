@@ -28,10 +28,8 @@ class SwitchEnvCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $filename = \Application::getInstance()->getEnvFileName();
         $env = $input->getOption('name');
-
-        file_put_contents($filename, $env);
+        \Application::getInstance()->setEnv($env);
 
         $output->writeln(sprintf('Environment set to <comment>%s</comment>', $env));
     }

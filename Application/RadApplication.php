@@ -7,31 +7,35 @@ use \AppKernel;
 class RadApplication
 {
     protected $timezone;
-    protected $envFile  = 'environment.txt';
+    protected $environment;
 
+    protected $debugMap      = array('prod' => false, 'dev' => true, 'test' => false);
     protected $availableEnvs = array('prod', 'dev', 'test');
 
-    protected $isCli = false;
-    protected $root;
     protected $selfFile;
 
-    static protected $instance;
+    private $isCli = false;
+    private $root;
+    static private $instance;
 
-    protected function __construct($timezone = null, $root = __DIR__)
+    protected function __construct($environment = null)
     {
-        if($timezone) {
-            $this->timezone = $timezone;
+        if ($environment) {
+            $this->environment = $environment;
+        }
+        if (null === $this->selfFile) {
+            throw new \InvalidArgumentException('put protected $selfFile = __FILE__; in Application class');
         }
         $this->isCli = PHP_SAPI === 'cli';
-        $this->root  = $root;
+        $this->root  = dirname($this->selfFile);
 
         $this->setup();
     }
 
-    static public function getInstance($timezone = null, $root = __DIR__)
+    static public function getInstance($environment = null)
     {
         if (null === self::$instance) {
-            self::$instance = new static($timezone, $root);
+            self::$instance = new static($environment);
         }
 
         return self::$instance;
@@ -51,36 +55,50 @@ class RadApplication
         }
     }
 
-    public function getEnvFileName()
-    {
-        return $this->root . '/' . $this->envFile;
-    }
-
     protected function getEnv()
     {
-        $environment = null;
-        $debug       = null;
-        $envFile     = $this->getEnvFileName();
+        $environment = $this->environment;
+        if (!$environment) {
+            $environment = $this->getEnvFromFile();
+        }
+        $debug = null;
 
         if (getenv('SYMFONY_ENV')) {
             $environment = getenv('SYMFONY_ENV');
-        } elseif (file_exists($envFile)) {
-            $environment = trim(file_get_contents($envFile));
-        }
-
-        if (null === $debug) {
-            $debug = $environment !== 'prod';
         }
 
         if ($this->isCli) {
             $input       = new ArgvInput;
             $environment = $input->getParameterOption(array('--env', '-e'), $environment);
-            if ($environment != 'prod') {
-                $debug = $input->hasParameterOption(array('--no-debug', $debug));
-            }
+            $debug = $input->hasParameterOption(array('--debug', '-d'));
+        }
+
+        if ($debug === null) {
+            $debug = ($environment && isset($this->debugMap[$environment])) ? $this->debugMap[$environment] : false;
         }
 
         return array($environment, $debug);
+    }
+
+    protected function getEnvFilePath()
+    {
+        return $this->root . '/environment.txt';
+    }
+
+    protected function getEnvFromFile()
+    {
+        $file = $this->getEnvFilePath();
+
+        return file_exists($file) ? file_get_contents($file) : null;
+    }
+
+    public function setEnv($env)
+    {
+        $this->checkEnv($env);
+        $file = $this->getEnvFilePath();
+        file_put_contents($file, $env);
+
+        return $this;
     }
 
     public function getAvailableEnvs()
@@ -90,7 +108,7 @@ class RadApplication
 
     protected function checkEnv($environment)
     {
-        $envs = self::getAvailableEnvs();
+        $envs = $this->getAvailableEnvs();
         if (!$environment || !in_array($environment, $envs)) {
             $options = '[' . implode(', ', $envs) . ']';
             $message = 'Set an environment: app/console millwright:rad:setenv --env=' . $options . ' --name=' . $options;
@@ -101,10 +119,10 @@ class RadApplication
 
     public function createKernel()
     {
-        list($env, $debug) = $this->getEnv();
-        $this->checkEnv($env);
+        list($environment, $debug) = $this->getEnv();
+        $this->checkEnv($environment);
 
-        return new AppKernel($env, $debug);
+        return new AppKernel($environment, $debug);
     }
 
     public function getSelfFile()
