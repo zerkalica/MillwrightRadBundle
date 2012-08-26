@@ -12,8 +12,6 @@ class VersionFileReplacer
     protected $versionRegex = '#(const\s+VERSION\s*\=\s*\').*?(\'\s*;)#';
     protected $buildRegex   = '#(const\s+BUILD\s*\=\s*\').*?(\'\s*;)#';
 
-    protected $environmentRegex   = '#(protected\s+\$environment\s*\=\s*\').*?(\'\s*;)#';
-
     protected $replaceTo = '${1}%s${2}';
 
     public function __construct(
@@ -73,13 +71,6 @@ class VersionFileReplacer
     public function replaceBuild($build)
     {
         $this->replaceInFile($this->fileName, $this->buildRegex, sprintf($this->replaceTo, $build));
-
-        return $this;
-    }
-
-    public function replaceEnvironment($environment)
-    {
-        $this->replaceInFile($this->fileName, $this->environmentRegex, sprintf($this->replaceTo, $environment));
 
         return $this;
     }
