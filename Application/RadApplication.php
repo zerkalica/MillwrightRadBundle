@@ -83,8 +83,8 @@ class RadApplication
     protected function getDebug($environment)
     {
         $debug = null;
-        if ($this->isCli) {
-            $debug = $this->input->hasParameterOption(array('--debug', '-d'));
+        if ($this->isCli && $this->input->hasParameterOption(array('--debug', '-d'))) {
+            $debug = true;
         }
         if ($debug === null) {
             $debug = ($environment && isset($this->debugMap[$environment])) ? $this->debugMap[$environment] : false;
