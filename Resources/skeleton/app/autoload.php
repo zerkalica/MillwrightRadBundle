@@ -1,14 +1,18 @@
 <?php
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
-define('SNAPDIR', dirname(dirname(__DIR__)) . '/suymfony-snap');
+if (defined('SNAPDIR')) {
+    return;
+}
+
+define('SNAPDIR', dirname(__DIR__));
 define('SRCDIR', dirname(__DIR__) . '/src');
 
 call_user_func(function() {
     $loader       = include SNAPDIR . '/vendor/autoload.php';
     if (!$loader) {
         $nl = PHP_SAPI === 'cli' ? PHP_EOL : '<br />';
-        echo "$nl$nl";
+        echo $nl . $nl;
         if (is_writable(dirname(__DIR__)) && $installer = @file_get_contents('http://getcomposer.org/installer')) {
             echo 'You must set up the project dependencies.'.$nl;
             $installerPath = dirname(__DIR__).'/install-composer.php';

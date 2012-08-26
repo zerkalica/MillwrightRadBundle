@@ -7,15 +7,17 @@ use \AppKernel;
 class RadApplication
 {
     protected $timezone;
-    protected $environment;
 
-    protected $debugMap      = array('prod' => false, 'dev' => true, 'test' => false);
-    protected $availableEnvs = array('prod', 'dev', 'test');
+    protected $debugMap = array('prod' => false, 'dev' => true, 'test' => true);
 
     protected $selfFile;
 
+    private $environment;
     private $isCli = false;
+    private $input;
     private $root;
+    private $availableEnvs;
+
     static private $instance;
 
     protected function __construct($environment = null)
@@ -28,6 +30,10 @@ class RadApplication
         }
         $this->isCli = PHP_SAPI === 'cli';
         $this->root  = dirname($this->selfFile);
+
+        if ($this->isCli) {
+            $this->input = new ArgvInput;
+        }
 
         $this->setup();
     }
@@ -61,23 +67,30 @@ class RadApplication
         if (!$environment) {
             $environment = $this->getEnvFromFile();
         }
-        $debug = null;
 
         if (getenv('SYMFONY_ENV')) {
             $environment = getenv('SYMFONY_ENV');
         }
 
         if ($this->isCli) {
-            $input       = new ArgvInput;
-            $environment = $input->getParameterOption(array('--env', '-e'), $environment);
-            $debug = $input->hasParameterOption(array('--debug', '-d'));
+            $environment = $this->input->getParameterOption(array('--env', '-e'), $environment);
         }
+        $this->checkEnv($environment);
 
+        return $environment;
+    }
+
+    protected function getDebug($environment)
+    {
+        $debug = null;
+        if ($this->isCli) {
+            $debug = $this->input->hasParameterOption(array('--debug', '-d'));
+        }
         if ($debug === null) {
             $debug = ($environment && isset($this->debugMap[$environment])) ? $this->debugMap[$environment] : false;
         }
 
-        return array($environment, $debug);
+        return $debug;
     }
 
     protected function getEnvFilePath()
@@ -103,6 +116,10 @@ class RadApplication
 
     public function getAvailableEnvs()
     {
+        if (null === $this->availableEnvs) {
+            $this->availableEnvs = array_keys($this->debugMap);
+        }
+
         return $this->availableEnvs;
     }
 
@@ -119,8 +136,8 @@ class RadApplication
 
     public function createKernel()
     {
-        list($environment, $debug) = $this->getEnv();
-        $this->checkEnv($environment);
+        $environment = $this->getEnv();
+        $debug       = $this->getDebug($environment);
 
         return new AppKernel($environment, $debug);
     }

@@ -37,6 +37,7 @@ class GenerateAppClassCommand extends ContainerAwareCommand
         $generator->generate('Application.php');
         $generator->generate('console');
         $generator->generate('environment.txt');
+        $generator->generate('autoload.php');
 
         $generator = new AppClassGenerator($fs, $skel, $root . '/../web');
         $generator->generate('app.php');
