@@ -14,3 +14,14 @@ services:
             - @millwright_rad.form.days_to_seconds_transformer
         tags:
             - { name: form.type, alias: days }
+
+    millwright_rad.phone_form_type:
+        class: Millwright\RadBundle\Form\Type\PhoneFormType
+        arguments:
+            - @millwright_rad.phone.transformer
+        tags:
+            - { name: form.type, alias: 'phone'}
+
+    millwright_rad.phone.transformer:
+        class: Millwright\RadBundle\Form\DataTransformer\PhoneToPhoneViewTransformer
+        public: false
