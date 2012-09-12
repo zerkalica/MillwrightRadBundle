@@ -13,11 +13,15 @@ class PhoneToPhoneViewTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        if (null !== $value) {
+            $value = substr($value, 0, 3) . ' ' .
+                substr($value, 3, 3) . ' ' .
+                substr($value, 6, 2) . ' ' .
+                substr($value, 8);
+        }
+
         // return xxx-xxx-xx-xx format
-        return substr($value, 0, 3) . ' ' .
-            substr($value, 3, 3) . ' ' .
-            substr($value, 6, 2) . ' ' .
-            substr($value, 8);
+        return $value;
     }
 
     /**
