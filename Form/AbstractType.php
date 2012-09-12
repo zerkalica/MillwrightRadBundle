@@ -82,6 +82,7 @@ abstract class AbstractType extends BaseAbstractType
             'label'              => null,
             'intention'          => $this->getIntention(),
             'translation_domain' => $this->getDefaultTranslationDomain(),
+            'show_child_legend'  => true,
         ));
     }
 }
