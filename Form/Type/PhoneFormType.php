@@ -50,4 +50,14 @@ class PhoneFormType extends AbstractType
     {
         return 'phone';
     }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'widget_addon' => array(
+                'type' => 'prepend',
+                'text' => '+',
+            ),
+        ));
+    }
 }

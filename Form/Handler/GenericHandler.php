@@ -36,7 +36,7 @@ abstract class GenericHandler implements GenericHandlerInterface
     protected function handle()
     {
         if (in_array($this->request->getMethod(), $this->requestMethods)) {
-            $this->form->bindRequest($this->request);
+            $this->form->bind($this->request);
 
             if ($this->form->isValid()) {
                 return true;

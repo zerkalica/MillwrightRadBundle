@@ -1,2 +1,3 @@
 validator:
     date_less_than_current: Указанная дата меньше текущей
+    not_valid_phone: Телефон должен быть в формате: 7 812 324 45 76
