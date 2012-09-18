@@ -9,26 +9,31 @@ use Symfony\Component\Form\DataTransformerInterface;
 class PhoneToPhoneViewTransformer implements DataTransformerInterface
 {
     protected $defaultCountryCode = '7';
+    protected $defaultSeparator   = '-';
 
     /**
      * {@inheritDoc}
      */
     public function transform($value)
     {
+        $newValue = '';
+
         if (null !== $value) {
-            if (strlen($value) == 11) {
-                $countryCode = substr($value, 0, 1);
-                $value       = substr($value, 1);
-            } else {
-                $countryCode = $this->defaultCountryCode;
+            $len = strlen($value);
+
+            for($i = 0; $i < $len; $i++) {
+                // Add placeholders to fromat phone like x xxx xxx-xx-xx
+                if ($i == 4 || $i == 1) {
+                    $newValue .= ' ';
+                } elseif ($i== 7 || $i == 9) {
+                    $newValue .= $this->defaultSeparator;
+                }
+
+                $newValue .= $value[$i];
             }
-            $value = $countryCode . ' ' . substr($value, 0, 3) . ' ' .
-                substr($value, 3, 3) . '-' .
-                substr($value, 6, 2) . '-' .
-                substr($value, 8);
         }
 
-        return $value;
+        return $newValue;
     }
 
     /**
@@ -37,9 +42,6 @@ class PhoneToPhoneViewTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         $str = preg_replace('/[^\d]{0,}/', '', $value);
-        if (strlen($str) == 10) {
-           $str = $this->defaultCountryCode . $str;
-        }
 
         return $str;
     }
