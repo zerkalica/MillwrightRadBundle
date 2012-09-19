@@ -100,7 +100,7 @@ abstract class Controller extends BaseController
         $route,
         $parameters = null,
         $message = null,
-        $messageParams = null,
+        array $messageParams = array(),
         $domain = null,
         $status = 302)
     {
