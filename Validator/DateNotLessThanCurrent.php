@@ -20,11 +20,14 @@ class DateNotLessThanCurrent extends ConstraintValidator
         /** @var $constraint BaseConstraint */
         /** @var $date \DateTime */
         PhpUtil::assert($constraint instanceof BaseConstraint);
-        PhpUtil::assert($date instanceof \DateTime);
+
+        if ($date) {
+            PhpUtil::assert($date instanceof \DateTime);
+        }
 
         $currentDate = new \DateTime;
 
-        if ($date < $currentDate) {
+        if (null === $date || $date < $currentDate) {
             $this->context->addViolation($constraint->getMessage());
         }
     }
