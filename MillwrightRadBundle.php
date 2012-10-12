@@ -1,5 +1,4 @@
 <?php
-
 namespace Millwright\RadBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
