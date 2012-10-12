@@ -49,7 +49,10 @@ class KnpPaginator implements PaginatorInterface
      */
     public function paginate($target, $alias, Form $form = null)
     {
-        $options['pageParameterName'] = $alias . '_page';
+        $options['pageParameterName']          = $alias . '_page';
+        $options['sortDirectionParameterName'] = $alias . '_direction';
+        $options['sortFieldParameterName']     = $alias . '_sort';
+
         $page  = $this->request->get($options['pageParameterName'], 1);
         $limit = 5;
 

@@ -1,9 +1,15 @@
 <?php
 namespace Millwright\RadBundle\Paginator;
 
-use Millwright\RadBundle\Paginator\PaginatorInterface;
 use Symfony\Component\Form\Form;
 
+use Doctrine\ORM\QueryBuilder;
+
+use Millwright\RadBundle\Paginator\PaginatorInterface;
+
+/**
+ * Paginator trait
+ */
 trait PaginatorTrait
 {
     /**
