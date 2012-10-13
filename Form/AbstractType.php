@@ -23,16 +23,6 @@ abstract class AbstractType extends BaseAbstractType
     }
 
     /**
-     * Get default form type label
-     *
-     * @return string
-     */
-    protected function getDefaultLabel()
-    {
-        return substr(str_replace('_', '.', strstr($this->getName(), '_')), 1);
-    }
-
-    /**
      * Get default form type name
      *
      * @return string
@@ -40,9 +30,8 @@ abstract class AbstractType extends BaseAbstractType
     protected function getDefaultName()
     {
         $parts = explode('\\', ClassUtils::getRealClass($this));
-        $parts = array_splice($parts, 2);
-        $name  = implode('_', $parts);
-        $name  = str_replace(array('Bundle', '_Form', '_Type', 'FormType'), array(''), $name);
+        $parts = array_splice($parts, -2);
+        $name  = str_replace(array('Form', 'Type', 'FormType'), array(''), implode('_', $parts));
 
         return strtolower($name);
     }

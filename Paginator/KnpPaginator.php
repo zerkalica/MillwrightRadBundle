@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-use Lexik\Bundle\FormFilterBundle\Filter\QueryBuilderUpdaterInterface;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\Form;
 
 class KnpPaginator implements PaginatorInterface
@@ -19,17 +19,18 @@ class KnpPaginator implements PaginatorInterface
      */
     protected $request;
 
-    protected $queryUpdater;
+    protected $filterUpdater;
 
     /**
      * Constructor
      *
-     * @param BasePaginator $paginator
+     * @param BasePaginator                 $paginator
+     * @param FilterBuilderUpdaterInterface $filterUpdater
      */
-    public function __construct(BasePaginator $paginator, QueryBuilderUpdaterInterface $queryUpdater)
+    public function __construct(BasePaginator $paginator, FilterBuilderUpdaterInterface $filterUpdater)
     {
-        $this->paginator    = $paginator;
-        $this->queryUpdater = $queryUpdater;
+        $this->paginator     = $paginator;
+        $this->filterUpdater = $filterUpdater;
     }
 
     /**
@@ -57,7 +58,7 @@ class KnpPaginator implements PaginatorInterface
         $limit = 5;
 
         if (null !== $form) {
-            $this->queryUpdater->addFilterConditions($form, $target, $alias);
+            $this->filterUpdater->addFilterConditions($form, $target, $alias);
         }
 
         return $this->paginator->paginate($target, $page, $limit, $options);
