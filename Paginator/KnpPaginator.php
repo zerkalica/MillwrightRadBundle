@@ -6,9 +6,11 @@ use Knp\Component\Pager\Paginator as BasePaginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Form\Form;
 
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
-use Symfony\Component\Form\Form;
+
+use Millwright\ConfigurationBundle\Builder\OptionRegistryInterface;
 
 class KnpPaginator implements PaginatorInterface
 {
@@ -21,16 +23,23 @@ class KnpPaginator implements PaginatorInterface
 
     protected $filterUpdater;
 
+    protected $options;
+
     /**
      * Constructor
      *
      * @param BasePaginator                 $paginator
      * @param FilterBuilderUpdaterInterface $filterUpdater
+     * @param OptionRegistryInterface       $options
      */
-    public function __construct(BasePaginator $paginator, FilterBuilderUpdaterInterface $filterUpdater)
-    {
+    public function __construct(
+        BasePaginator $paginator,
+        FilterBuilderUpdaterInterface $filterUpdater,
+        OptionRegistryInterface $options
+    ) {
         $this->paginator     = $paginator;
         $this->filterUpdater = $filterUpdater;
+        $this->options       = $options;
     }
 
     /**
@@ -50,9 +59,19 @@ class KnpPaginator implements PaginatorInterface
      */
     public function paginate($target, $alias, Form $form = null)
     {
-        $options['pageParameterName']          = $alias . '_page';
-        $options['sortDirectionParameterName'] = $alias . '_direction';
-        $options['sortFieldParameterName']     = $alias . '_sort';
+        $options = array(
+            'pageParameterName'          => 'page',
+            'sortDirectionParameterName' => 'direction',
+            'sortFieldParameterName'     => 'sort',
+        );
+
+        foreach ($options as $name => $value) {
+            $paramName      = $alias . '_' . $value;
+            $options[$name] = $paramName;
+            if ($name !== 'pageParameterName') {
+                $this->options->addOption($alias, $paramName, $this->request->get($paramName));
+            }
+        }
 
         $page  = $this->request->get($options['pageParameterName'], 1);
         $limit = 5;

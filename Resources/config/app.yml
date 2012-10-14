@@ -1,8 +1,0 @@
-services:
-    millwright_rad.version.manager:
-        class: Millwright\RadBundle\Application\VersionManager
-
-    millwright_rad.version.replacer:
-        class: Millwright\RadBundle\Application\VersionFileReplacer
-        arguments:
-            - @millwright_rad.version.manager

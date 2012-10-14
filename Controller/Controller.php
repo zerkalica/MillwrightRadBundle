@@ -122,7 +122,9 @@ abstract class Controller extends BaseController
      */
     public function redirectRoute($route, $parameters = null, $status = 302)
     {
-        return $this->redirect($this->generateUrl($route, (array) $parameters, $status));
+        $parameters = array_merge($this->getRequest()->query->all(), (array) $parameters);
+
+        return $this->redirect($this->generateUrl($route, $parameters, $status));
     }
 
     /**
