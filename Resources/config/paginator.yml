@@ -1,9 +1,0 @@
-services:
-    millwright_rad.paginator:
-        class: Millwright\RadBundle\Paginator\KnpPaginator
-        arguments:
-             - @knp_paginator
-             - @lexik_form_filter.query_builder_updater
-             - @millwright_configuration.registry
-        tags:
-            -  { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
