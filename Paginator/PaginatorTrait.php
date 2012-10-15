@@ -7,6 +7,8 @@ use Doctrine\ORM\QueryBuilder;
 
 use Millwright\RadBundle\Paginator\PaginatorInterface;
 
+use Millwright\ConfigurationBundle\ORM\ORMUtil;
+
 /**
  * Paginator trait
  */
@@ -39,5 +41,5 @@ trait PaginatorTrait
      *
      * @return QueryBuilder|object
      */
-    protected abstract function getSelectBuilder();
+    protected abstract function getSelectBuilder($alias = null);
 }
