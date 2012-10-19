@@ -3,7 +3,7 @@ namespace Millwright\RadBundle\Twig;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-use Millwright\ConfigurationBundle\PhpUtil as Util;
+use Millwright\Util\PhpUtil as Util;
 
 /**
  * Status mapper interface

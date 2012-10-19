@@ -4,7 +4,7 @@ namespace Millwright\RadBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-use Millwright\ConfigurationBundle\PhpUtil;
+use Millwright\Util\PhpUtil;
 use Millwright\RadBundle\Validator\Constraint\Constraint as BaseConstraint;
 
 /**

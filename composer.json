@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "zerkalica/millwright-configuration-bundle": "dev-master"
+        "zerkalica/millwright-util": "dev-master"
     },
     "autoload": {
         "psr-0": {
