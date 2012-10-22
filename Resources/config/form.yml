@@ -25,3 +25,8 @@ services:
     millwright_rad.phone.transformer:
         class: Millwright\RadBundle\Form\DataTransformer\PhoneToPhoneViewTransformer
         public: false
+
+    millwright_rad.form.date_picker:
+            class: Millwright\RadBundle\Form\Type\DatePickerFormType
+            tags:
+                - { name: form.type, alias: 'date_picker' }
