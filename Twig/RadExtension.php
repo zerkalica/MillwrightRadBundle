@@ -29,7 +29,7 @@ class RadExtension extends \Twig_Extension
     {
         return array(
             'date_format'      => new \Twig_Function_Method($this, 'getDateFormat'),
-            'date_time_fromat' => new \Twig_Function_Method($this, 'getDateTomeFormat'),
+            'date_time_format' => new \Twig_Function_Method($this, 'getDateTomeFormat'),
         );
     }
 

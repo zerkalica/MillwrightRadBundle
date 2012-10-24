@@ -29,7 +29,7 @@ class DatePickerFormType extends AbstractType
         $resolver->setDefaults(array(
             'widget' => 'single_text',
             'format' => $this->dateFormat,
-            'attr'   => array('class' => 'date')
+            'attr'   => array('class' => 'date-picker')
         ));
     }
 

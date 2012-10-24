@@ -16,7 +16,19 @@ class DateTimePickerFormType extends DatePickerFormType
      */
     public function getParent()
     {
-        return 'time';
+        return 'datetime';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'widget' => 'single_text',
+            'format' => $this->dateFormat,
+            'attr'   => array('class' => 'date-time-picker')
+        ));
     }
 
     /**

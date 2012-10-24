@@ -1,3 +1,7 @@
+parameters:
+    millwright_rad.form.date_format: 'd.M.y'
+    millwright_rad.form.date_time_format: 'd.M.y H:m:s'
+
 services:
     millwright_rad.form.group_select_type:
         class: Millwright\RadBundle\Form\Type\EntitySelectFormType
@@ -29,14 +33,13 @@ services:
     millwright_rad.form.date_picker:
             class: Millwright\RadBundle\Form\Type\DatePickerFormType
             arguments:
-                - %millwright_rad.date_format%
+                - %millwright_rad.form.date_format%
             tags:
                 - { name: form.type, alias: 'date_picker' }
-
 
     millwright_rad.form.date_time_picker:
             class: Millwright\RadBundle\Form\Type\DateTimePickerFormType
             arguments:
-                - %millwright_rad.date_time_format%
+                - %millwright_rad.form.date_time_format%
             tags:
                 - { name: form.type, alias: 'date_time_picker' }
