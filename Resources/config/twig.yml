@@ -8,5 +8,6 @@ services:
         class: Millwright\RadBundle\Twig\RadExtension
         arguments:
             - %millwright_rad.date_format%
+            - %millwright_rad.date_time_format%
         tags:
             - { name: twig.extension }
