@@ -11,6 +11,15 @@ use Millwright\RadBundle\Form\AbstractType;
  */
 class DatePickerFormType extends AbstractType
 {
+    protected $dateFormat;
+
+    /**
+     * @param null|string $dateFormat
+     */
+    public function __construct($dateFormat = 'dd-MM-yyyy')
+    {
+        $this->dateFormat = $dateFormat;
+    }
 
     /**
      * {@inheritdoc}
@@ -19,7 +28,8 @@ class DatePickerFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'widget' => 'single_text',
-            'attr' => array('class' => 'date-picker'),
+            'format' => $this->dateFormat,
+            'attr'   => array('class' => 'date')
         ));
     }
 
