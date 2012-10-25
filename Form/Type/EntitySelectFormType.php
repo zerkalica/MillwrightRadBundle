@@ -45,13 +45,14 @@ class EntitySelectFormType extends AbstractType
             // Harden against NULL values (like in EntityType and ModelType)
             $choices = null !== $options['choices'] ? $options['choices'] : array();
 
-            if (is_object($choices)) {
-                $choicesKeys = spl_object_hash($choices);
-            } else {
-                $choicesKeys = array_map(function($choice) {
-                    return $choice->getId();
-                } , $choices);
+            if ($choices instanceof \Doctrine\Common\Collections\Collection) {
+                $choices = $choices->toArray();
             }
+
+            $choicesKeys = array_map(function($choice) {
+                return $choice->getId();
+            } , $choices);
+
 
             // Reuse existing choice lists in order to increase performance
             $hash = md5(json_encode(array($choicesKeys, $options['preferred_choices'])));
