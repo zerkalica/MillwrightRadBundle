@@ -1,6 +1,8 @@
 <?php
 namespace Millwright\RadBundle\Twig;
 
+use Millwright\Util\NumberToString;
+
 /**
  * Twig extension for Bootstrap helpers
  */
@@ -34,6 +36,16 @@ class RadExtension extends \Twig_Extension
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getFilters()
+    {
+        return array(
+            'in_words' => new \Twig_Filter_Method($this, 'getInWords'),
+        );
+    }
+
+    /**
      * Get date format string
      *
      * @return string
@@ -51,6 +63,18 @@ class RadExtension extends \Twig_Extension
     public function getTimeDateFormat()
     {
         return $this->dateTimeFormat;
+    }
+
+    /**
+     * Converts a number to in_words value
+     *
+     * @param string $number
+     *
+     * @return string
+     */
+    public function getInWords($number)
+    {
+        return NumberToString::numberToString($number);
     }
 
     /**
