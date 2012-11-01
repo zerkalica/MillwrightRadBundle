@@ -23,7 +23,9 @@ class DateRange
     }
 
     /**
-     * {@inheritDoc}
+     * @param \DateTime $fromDate
+     *
+     * @return DateRange
      */
     public function setFromDate(\DateTime $fromDate)
     {
@@ -33,7 +35,7 @@ class DateRange
     }
 
     /**
-     * {@inheritDoc}
+     * @return \DateTime
      */
     public function getFromDate()
     {
@@ -41,7 +43,9 @@ class DateRange
     }
 
     /**
-     * {@inheritDoc}
+     * @param \DateTime $toDate
+     *
+     * @return DateRange
      */
     public function setToDate(\DateTime $toDate)
     {
@@ -51,7 +55,7 @@ class DateRange
     }
 
     /**
-     * {@inheritDoc}
+     * @return \DateTime
      */
     public function getToDate()
     {
