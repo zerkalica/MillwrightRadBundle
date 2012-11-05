@@ -26,10 +26,17 @@ class DatePickerFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $callback = function(Options $options)
+        {
+            return array(
+                'class' => 'datepicker',
+            );
+        };
+
         $resolver->setDefaults(array(
             'widget' => 'single_text',
             'format' => $this->dateFormat,
-            'attr'   => array('class' => 'date-picker')
+            'attr'   => $callback,
         ));
     }
 

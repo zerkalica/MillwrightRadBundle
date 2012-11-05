@@ -3,43 +3,50 @@ parameters:
     millwright_rad.form.date_time_format: 'd.M.y H:m:s'
 
 services:
-    millwright_rad.form.group_select_type:
-        class: Millwright\RadBundle\Form\Type\EntitySelectFormType
-        tags:
-            - { name: form.type, alias: 'entity_choice' }
-
-    millwright_rad.form.days_to_seconds_transformer:
+    millwright_rad.form.transformer.seconds_to_days:
         class: Millwright\RadBundle\Form\DataTransformer\SecondsToDaysTransformer
         public: false
 
-    millwright_rad.form.days.type:
+    millwright_rad.form.type.days:
         class: Millwright\RadBundle\Form\Type\DaysFormType
         arguments:
-            - @millwright_rad.form.days_to_seconds_transformer
+            - @millwright_rad.form.transformer.seconds_to_days
         tags:
             - { name: form.type, alias: days }
 
-    millwright_rad.phone_form_type:
-        class: Millwright\RadBundle\Form\Type\PhoneFormType
-        arguments:
-            - @millwright_rad.phone.transformer
-        tags:
-            - { name: form.type, alias: 'phone'}
-
-    millwright_rad.phone.transformer:
+    millwright_rad.form.transformer.phone:
         class: Millwright\RadBundle\Form\DataTransformer\PhoneToPhoneViewTransformer
         public: false
 
-    millwright_rad.form.date_picker:
+    millwright_rad.form.type.phone:
+        class: Millwright\RadBundle\Form\Type\PhoneFormType
+        arguments:
+            - @millwright_rad.form.transformer.phone
+        tags:
+            - { name: form.type, alias: 'phone'}
+
+
+    millwright_rad.form.type.datepicker:
             class: Millwright\RadBundle\Form\Type\DatePickerFormType
             arguments:
                 - %millwright_rad.form.date_format%
             tags:
-                - { name: form.type, alias: 'date_picker' }
+                - { name: form.type, alias: 'datepicker' }
 
-    millwright_rad.form.date_time_picker:
-            class: Millwright\RadBundle\Form\Type\DateTimePickerFormType
-            arguments:
-                - %millwright_rad.form.date_time_format%
-            tags:
-                - { name: form.type, alias: 'date_time_picker' }
+    millwright_rad.form.type.entity_choice:
+        class: Millwright\RadBundle\Form\Type\EntityChoiceFormType
+        tags:
+            - { name: form.type, alias: 'entity_choice' }
+
+    millwright_rad.form.type.chosen:
+        class: Millwright\RadBundle\Form\Type\ChosenFormType
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: 'chosen' }
+
+    millwright_rad.form.type.bootstrap_collection:
+        class: Millwright\RadBundle\Form\Type\BootstrapCollectionFormType
+        tags:
+            - { name: form.type, alias: 'bootstrap_collection' }
+

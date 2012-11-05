@@ -1,7 +1,7 @@
 parameters:
     millwright_rad.status_mapper.class: Millwright\RadBundle\Twig\StatusMapper
-    millwright_rad.view.date_format: 'dd.mm.yy'
-    millwright_rad.view.date_time_format: 'dd.mm.yy'
+    millwright_rad.view.date_format: 'dd.mm.yyyy'
+    millwright_rad.view.date_time_format: 'dd.mm.yyyy'
 
 services:
     millwright_rad.twig.extension:

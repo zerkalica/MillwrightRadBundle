@@ -18,7 +18,7 @@ use Millwright\RadBundle\Model\TreeInterface;
 /**
  * GroupSelect form type
  */
-class EntitySelectFormType extends AbstractType
+class EntityChoiceFormType extends AbstractType
 {
     /**
      * Caches created choice lists.
@@ -100,7 +100,7 @@ class EntitySelectFormType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
+        return 'chosen';
     }
 
     /**
