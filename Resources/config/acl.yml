@@ -1,9 +1,0 @@
-parameters:
-    security.acl.object_identity_retrieval_strategy.class: Millwright\RadBundle\Security\Acl\Domain\ORM\ORMObjectIdentityRetrievalStrategy
-
-services:
-    security.acl.object_identity_retrieval_strategy:
-        class: %security.acl.object_identity_retrieval_strategy.class%
-        arguments:
-            - @doctrine.orm.entity_manager
-            - @validator.mapping.class_metadata_factory
