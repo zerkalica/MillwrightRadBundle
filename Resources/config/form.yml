@@ -49,4 +49,3 @@ services:
         class: Millwright\RadBundle\Form\Type\BootstrapCollectionFormType
         tags:
             - { name: form.type, alias: 'bootstrap_collection' }
-
