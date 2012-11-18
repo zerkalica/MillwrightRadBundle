@@ -4,7 +4,8 @@ namespace Millwright\RadBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-use Millwright\Util\PhpUtil;
+use Assert\Assertion;
+
 use Millwright\RadBundle\Validator\Constraint\Constraint as BaseConstraint;
 
 /**
@@ -29,7 +30,7 @@ class Phone extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         /** @var $constraint BaseConstraint */
-        PhpUtil::assert($constraint instanceof BaseConstraint);
+        Assertion::isInstanceOf($constraint, 'Millwright\RadBundle\Validator\Constraint\Constraint');
 
         if (strlen($value) != 11) {
             $this->context->addViolation($constraint->getMessage());
