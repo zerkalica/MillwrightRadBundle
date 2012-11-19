@@ -32,7 +32,7 @@ class Phone extends ConstraintValidator
         /** @var $constraint BaseConstraint */
         Assertion::isInstanceOf($constraint, 'Millwright\RadBundle\Validator\Constraint\Constraint');
 
-        if (strlen($value) != 11) {
+        if (!empty($value) && strlen($value) != 11) {
             $this->context->addViolation($constraint->getMessage());
         }
     }
